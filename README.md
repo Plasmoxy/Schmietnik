@@ -1,5 +1,6 @@
 # PmxyMIDI java cell text midi player
 _**amazing**_.
+_** c h e c c the [release page](https://github.com/Plasmoxy/PmxyMIDI/releases) for java binaries xD**_
 
 ### Usage  
  ```shell
