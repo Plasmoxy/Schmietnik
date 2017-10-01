@@ -1,4 +1,4 @@
-package pmxymidi;
+package schmietnik;
 
 import javax.sound.midi.InvalidMidiDataException;
 import javax.sound.midi.MetaEventListener;

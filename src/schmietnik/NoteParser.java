@@ -1,4 +1,4 @@
-package pmxymidi;
+package schmietnik;
 
 import java.util.Arrays;
 

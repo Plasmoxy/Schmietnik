@@ -1,4 +1,4 @@
-package pmxymidi;
+package schmietnik;
 
 import java.io.FileInputStream;
 import java.io.IOException;

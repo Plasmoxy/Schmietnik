@@ -1,4 +1,4 @@
-package pmxymidi;
+package schmietnik;
 
 public class NoteParseException extends Exception
 {
