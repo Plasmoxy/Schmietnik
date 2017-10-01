@@ -1,6 +1,6 @@
-# PmxyMIDI java cell text midi player
+# Schmietnik java cell text midi player
 _**amazing**_.  
-_**c h e c c**_ the [release page](https://github.com/Plasmoxy/PmxyMIDI/releases) for java binaries xD
+_**c h e c c**_ the [release page](https://github.com/Plasmoxy/Schmietnik/releases) for java binaries xD
 
 ### Usage  
  ```shell
@@ -13,11 +13,11 @@ _**c h e c c**_ the [release page](https://github.com/Plasmoxy/PmxyMIDI/releases
 
 #### Examples of usage :
 ```
-java -jar pmxymidi.jar harrypotter.txt 100 2
+java -jar schmietnik.jar harrypotter.txt 100 2
 ```
  - plays **harrypotter.txt** cell file with tempo **100** and length of notes **2**
 ```
-java -jar pmxymidi.jar
+java -jar schmietnik.jar
 ```
  - plays notes.txt with default tempo and note length
 ### Cell file syntax
