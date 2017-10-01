@@ -19,7 +19,7 @@ java -jar pmxymidi.jar harrypotter.txt 100 2
 java -jar pmxymidi.jar
 ```
  - plays notes.txt with default tempo and note length
-#### Cell file syntax
+### Cell file syntax
 
 The cell files are designed to be symetrical, it is recommended to use monospace font when editing.
 A song consists of at least one track, each track has at least one cell.
