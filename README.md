@@ -36,4 +36,4 @@ C-4 D-4 Eb4 E#6
 E-6 --- Bb0
 ```
 
-_Also note that the code is poorly programmed so a lot of errors may come but its still fun lol xD_
+_Also note that the code is poorly programmed so a lot of errors may appear but its still fun lol xD_
