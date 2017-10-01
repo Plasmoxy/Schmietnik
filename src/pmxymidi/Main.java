@@ -7,10 +7,10 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
-public class Main
+public final class Main
 {
 	
-	static String readFile(String path) throws IOException 
+	private static final String readFile(String path) throws IOException 
 	{
 		byte[] encoded = Files.readAllBytes(Paths.get(path));
 		return new String(encoded, StandardCharsets.UTF_8);
@@ -33,7 +33,7 @@ public class Main
 						+ "2. argument : tempo (in BPM) (default = 80)\n"
 						+ "3. argument : note duration (length in cells) ( default = 1 )\n\n"
 						+ "Writing notes file guide :\n"
-						+ "Each track is separated by newline, so one row per line.\n"
+						+ "Each track is separated by newline, so one line per track.\n"
 						+ "Simultaneous note cells are separated by spaces.\n"
 						+ "Each cell consists of 3 characters :\n"
 						+ " 1. note letter (CDEFGAB), for empty note use \"-\"\n"
