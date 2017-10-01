@@ -39,6 +39,7 @@ public class NoteParser
 		case 'A' : noteNum = 9 ;break;
 		case 'B' : noteNum = 11 ;break;
 		case '-' : return -1 ;
+		case '.' : return -2 ;
 		default :
 			throw new NoteParseException();
 		}
@@ -75,13 +76,13 @@ public class NoteParser
 		
 		if (str.contains("\n"))
 		{
-			strTracks = str.split("\n");
+			strTracks = str.split("\n"); // split to tracks
 		} else {
-			strTracks = new String[1];
+			strTracks = new String[1]; // in case of only one track
 			strTracks[0] = str;
 		}
 		
-		String[][] strNotes = new String[strTracks.length][];
+		String[][] strNotes = new String[strTracks.length][]; // allocate string array for every track
 		
 		for ( int i = 0; i < strTracks.length; i++)
 		{

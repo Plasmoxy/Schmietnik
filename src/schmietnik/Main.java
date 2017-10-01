@@ -10,10 +10,10 @@ import java.nio.file.Paths;
 public final class Main
 {
 	
-	private static final String VERSION = "1.0";
-	private static final String VERSION_FULL = "v" + VERSION + " Sona";
+	private static final String VERSION = "1.1";
+	private static final String VERSION_FULL = "v" + VERSION + " Lux";
 	
-	private static final String readFile(String path) throws IOException 
+	private static final String readFile(String path) throws IOException // snippet method for reading files as strings
 	{
 		byte[] encoded = Files.readAllBytes(Paths.get(path));
 		return new String(encoded, StandardCharsets.UTF_8);
@@ -27,7 +27,6 @@ public final class Main
 		
 		String fileName = "notes.txt";
 		int tempo = 80;
-		int duration = 1;
 		
 		if (args.length >= 1)
 		{
@@ -35,7 +34,6 @@ public final class Main
 			{
 				System.out.println("\n1. argument : file name with notes (or help) (default = notes.txt)\n"
 						+ "2. argument : tempo (in BPM) (default = 80)\n"
-						+ "3. argument : note duration (length in cells) ( default = 1 )\n\n"
 						+ "Writing notes file guide :\n"
 						+ "Each track is separated by newline, so one line per track.\n"
 						+ "Simultaneous note cells are separated by spaces.\n"
@@ -44,8 +42,11 @@ public final class Main
 						+ " 2. note shift ( # or b ), for no shift again just use \"-\"\n"
 						+ " 3. note octave -> 0 to 10, for tenth octave use letter \"A\"\n"
 						+ "\n"
+						+ "Extender :\n"
+						+ " -> If you wish to extend note ( so it has bigger duration ), you can use the extender cell \"...\"\n"
+						+ " for example C-4 ... ... D-4 will play C-4 for duration of 3 cells and then it will play D-4."
 						+ "Example :\n"
-						+ "C-4 D-4 Eb4 E#6\n"
+						+ "C-4 D-4 Eb4 E#6 ...\n"
 						+ "E-6 --- Bb0\n"
 						+ "\nNow go and waste your life by making songs in this LOL xDDDD\n"
 						);
@@ -60,14 +61,6 @@ public final class Main
 					System.out.println("Tempo must be a number !");
 				}
 			}
-			if (args.length >= 3)
-			{
-				try {
-					duration = Integer.valueOf(args[2]);
-				} catch (NumberFormatException e) {
-					System.out.println("Duration must be a number !");
-				}
-			}
 		}
 		
 		String notesSource = null;
@@ -80,7 +73,7 @@ public final class Main
 		
 		int[][] notes = NoteParser.niceParse(notesSource);
 		
-		SimpleArraySequence seq = new SimpleArraySequence(notes, duration);
+		SimpleArraySequence seq = new SimpleArraySequence(notes);
 		MidiPlayer player = new MidiPlayer(seq, tempo);
 		
 		player.play();

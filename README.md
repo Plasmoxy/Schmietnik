@@ -1,6 +1,7 @@
-# Schmietnik java cell text midi player
+# Schmietnik java cell text midi player (working on new readme)
 _**amazing**_.  
 _**c h e c c**_ the [release page](https://github.com/Plasmoxy/Schmietnik/releases) for java binaries xD
+_version :_ **v1.0 Sona**
 
 ### Usage  
  ```shell
