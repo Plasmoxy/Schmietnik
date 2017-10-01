@@ -19,7 +19,7 @@ public final class Main
 	public static void main(String[] args) throws Exception
 	{
 		
-		System.out.println("\n--- PmxyMIDI txt midi cell player by Plasmoxy xDDD --- < argument \"help\" for info >");
+		System.out.println("\n--- Schmietnik txt midi cell player by Plasmoxy xDDD --- < argument \"help\" for info >");
 		
 		String fileName = "notes.txt";
 		int tempo = 80;
