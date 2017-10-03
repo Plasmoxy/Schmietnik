@@ -10,8 +10,8 @@ import java.nio.file.Paths;
 public final class Main
 {
 	
-	private static final String VERSION = "1.1";
-	private static final String VERSION_FULL = "v" + VERSION + " Lux";
+	private static final String VERSION = "1.2";
+	private static final String VERSION_FULL = "v" + VERSION + " Janna";
 	
 	private static final String readFile(String path) throws IOException // snippet method for reading files as strings
 	{
@@ -24,6 +24,7 @@ public final class Main
 		
 		System.out.println("\n--- Schmietnik txt midi cell player by Plasmoxy xDDD --- < argument \"help\" for info >");
 		System.out.println("Version : " + VERSION_FULL);
+		System.out.println();
 		
 		String fileName = "notes.txt";
 		int tempo = 80;

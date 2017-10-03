@@ -1,6 +1,10 @@
 package schmietnik;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
+
+import javax.swing.text.html.HTMLDocument.Iterator;
 
 // note string to int[<midiTrack>][<midiNoteValue] array parser by Plasmoxy
 // Notes available from C0 to G10
@@ -15,6 +19,20 @@ public class NoteParser
 	private static void debugArray(Object[] o)
 	{
 		System.out.println(Arrays.deepToString(o));
+	}
+	
+	private static void debugStrList(List<List<String>> a)
+	{
+		for (List<String> l : a)
+		{
+			for (String s : l)
+			{
+				System.out.print(s);
+				System.out.print("|");
+			}
+			System.out.print(":");
+		}
+		
 	}
 	
 	public static int parseNote(String note) throws NoteParseException
@@ -70,41 +88,55 @@ public class NoteParser
 	}
 	
 	
-	public static int[][] niceParse(String str) throws NoteParseException {
+	public static int[][] niceParse(String str) throws NoteParseException 
+	{	
 		
-		String[] strTracks;
+		List<String> strTracks;
 		
 		if (str.contains("\n"))
 		{
-			strTracks = str.split("\n"); // split to tracks
+			strTracks = Arrays.asList(str.split("\n")); // split to tracks
 		} else {
-			strTracks = new String[1]; // in case of only one track
-			strTracks[0] = str;
+			strTracks = new ArrayList<String>(); // in case of only one track
+			strTracks.add(str);
 		}
 		
-		String[][] strNotes = new String[strTracks.length][]; // allocate string array for every track
+		strTracks.remove(null);
+		strTracks.remove("\n");
 		
-		for ( int i = 0; i < strTracks.length; i++)
+		List<List<String>> strNotes = new ArrayList<List<String>>();
+		
+		for (String track : strTracks)
 		{
-			if (strTracks[i].contains(" "))
+			if (track.contains(" "))
 			{
-				strNotes[i] = strTracks[i].split(" ");
+				strNotes.add(Arrays.asList(track.split(" ")));
 			} else {
-				strNotes[i] = new String[0];
-				strNotes[i][0] = strTracks[i];
+				List<String> currentTrackRef = new ArrayList<String>(); // create object, tempotary reference
+				currentTrackRef.add(track); // add the string to it
+				strNotes.add(currentTrackRef); // add the object
 			}
 		}
 		
-		int[][] notes = new int[strTracks.length][];
+		strNotes.remove(null);
+		for (List<String> l : strNotes)
+		{
+			l.remove(" ");
+		}
+		
+		debugStrList(strNotes);
+		
+		int[][] notes = new int[strNotes.size()][];
 		
 		try {
 			
-			for ( int tracki = 0; tracki < strTracks.length; tracki++)
+			for ( int tracki = 0; tracki < strNotes.size(); tracki++)
 			{
-				notes[tracki] = new int[strNotes[tracki].length]; // allocate int array for every track
-				for ( int notei = 0; notei < strNotes[tracki].length; notei++)
+				notes[tracki] = new int[strNotes.get(tracki).size()]; // allocate int array for every track
+				
+				for ( int notei = 0; notei < strNotes.get(tracki).size(); notei++)
 				{
-					notes[tracki][notei] = parseNote(strNotes[tracki][notei]);
+					notes[tracki][notei] = parseNote(strNotes.get(tracki).get(notei));
 				}
 			}
 			
