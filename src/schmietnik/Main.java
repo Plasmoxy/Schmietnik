@@ -62,7 +62,7 @@ public final class Main
 				try {
 					tempo = Integer.valueOf(args[1]);
 				} catch (NumberFormatException e) {
-					System.out.println("Tempo must be a number !");
+					System.out.println("Tempo must be a number !\n");
 				}
 			}
 		}
@@ -71,7 +71,7 @@ public final class Main
 		try {
 			notesSource = readFile(fileName);
 		} catch (IOException e) {
-			System.out.println("ERROR : File not found.");
+			System.out.println("ERROR : File not found.\n");
 			System.exit(-1);
 		}
 		
