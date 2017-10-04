@@ -3,9 +3,8 @@ package schmietnik;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.LinkedList;
 import java.util.List;
-
-import javax.swing.text.html.HTMLDocument.Iterator;
 
 // multitrack note string to int[<midiTrack>][<midiNoteValue] array parser by Plasmoxy
 // Notes available from C0 to G10
@@ -77,16 +76,15 @@ public class NoteParser
 	{	
 		
 		
-		List<String> strTracks = new ArrayList<String>(); // initialize temporary arraylist to store track strings
-		List<List<String>> strNotes = new ArrayList<List<String>>(); // the main 2D ArrayList with string notes
+		List<String> strTracks = new LinkedList<String>(); // initialize temporary arraylist to store track strings
+		List<List<String>> strNotes = new LinkedList<List<String>>(); // the main 2D ArrayList with string notes
 		
 		// --- Here we split the whole data to tracks by newline ( and carriage ) ---
 		if (str.contains("\n")) // see if there's newline
 		{
-			System.out.println("matches");
-			strTracks = Arrays.asList(str.split("\\r?\\n")); // AMAZINGLY split to tracks
+			strTracks = new LinkedList(Arrays.asList(str.split("\\r?\\n"))); // AMAZINGLY split to tracks
 		} else { // if not then its only one track
-			strTracks = new ArrayList<String>();
+			strTracks = new LinkedList<String>();
 			strTracks.add(str);
 		}
 		
@@ -98,9 +96,9 @@ public class NoteParser
 		{
 			if (track.contains(" "))
 			{
-				strNotes.add(Arrays.asList(track.split(" ")));
+				strNotes.add(new LinkedList(Arrays.asList(track.split(" "))));
 			} else { // if only one note
-				List<String> singleNoteList = new ArrayList<String>();
+				List<String> singleNoteList = new LinkedList<String>();
 				singleNoteList.add(track);
 				strNotes.add(singleNoteList);
 			}

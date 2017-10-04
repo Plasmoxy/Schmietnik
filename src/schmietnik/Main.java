@@ -1,11 +1,11 @@
 package schmietnik;
 
-import java.io.FileInputStream;
 import java.io.IOException;
-import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+
+import sun.util.logging.PlatformLogger;
 
 public final class Main
 {
@@ -21,6 +21,9 @@ public final class Main
 	
 	public static void main(String[] args) throws Exception
 	{
+		// turn off platform logger so it doesn't show the warning
+		sun.util.logging.PlatformLogger platformLogger = PlatformLogger.getLogger("java.util.prefs");
+		platformLogger.setLevel(PlatformLogger.Level.OFF);
 		
 		System.out.println("\n--- Schmietnik txt midi cell player by Plasmoxy xDDD --- < argument \"help\" for info >");
 		System.out.println("Version : " + VERSION_FULL);
