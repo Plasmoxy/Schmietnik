@@ -1,8 +1,12 @@
 package schmietnik;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.LinkedList;
+import java.util.List;
 
-// note string to int[<midiTrack>][<midiNoteValue] array parser by Plasmoxy
+// multitrack note string to int[<midiTrack>][<midiNoteValue] array parser by Plasmoxy
 // Notes available from C0 to G10
 // syntax : <noteLetter><shift><octave>
 // shift -> "-" for no shift, "#" for up, "b" for down
@@ -12,15 +16,12 @@ import java.util.Arrays;
 public class NoteParser
 {
 	
-	private static void debugArray(Object[] o)
-	{
-		System.out.println(Arrays.deepToString(o));
-	}
-	
-	public static int parseNote(String note) throws NoteParseException
+	// Parses note using the 3 character format
+	private static int parseNote(String note) throws NoteParseException
 	{
 		int midiValue = 0;
 		
+		// follows the format
 		char letter = note.charAt(0);
 		char shift = note.charAt(1);
 		char octave = note.charAt(2);
@@ -38,8 +39,8 @@ public class NoteParser
 		case 'G' : noteNum = 7 ;break;
 		case 'A' : noteNum = 9 ;break;
 		case 'B' : noteNum = 11 ;break;
-		case '-' : return -1 ;
-		case '.' : return -2 ;
+		case '-' : return -1 ; // an empty note, just straight return empty note -1 code
+		case '.' : return -2 ; // extender, return -2 extender code
 		default :
 			throw new NoteParseException();
 		}
@@ -59,9 +60,9 @@ public class NoteParser
 		}
 		
 		
-		midiValue = noteNum + octaveNum*12 + shiftNum;
+		midiValue = noteNum + octaveNum*12 + shiftNum; // thanks to revolutionary midi system, now we can actually have symetrical note logic
 		
-		if ( ( midiValue < 0 || midiValue > 127 )) {
+		if ( ( midiValue < 0 || midiValue > 127 )) { // in case some genius wanted to use more than 128 key piano
 			throw new NoteParseException();
 		}
 		
@@ -70,41 +71,62 @@ public class NoteParser
 	}
 	
 	
-	public static int[][] niceParse(String str) throws NoteParseException {
+	// Parses the whole text data 
+	public static int[][] niceParse(String str) throws NoteParseException 
+	{	
 		
-		String[] strTracks;
 		
-		if (str.contains("\n"))
+		List<String> strTracks = new LinkedList<String>(); // initialize temporary arraylist to store track strings
+		List<List<String>> strNotes = new LinkedList<List<String>>(); // the main 2D ArrayList with string notes
+		
+		// --- Here we split the whole data to tracks by newline ( and carriage ) ---
+		if (str.contains("\n")) // see if there's newline
 		{
-			strTracks = str.split("\n"); // split to tracks
-		} else {
-			strTracks = new String[1]; // in case of only one track
-			strTracks[0] = str;
+			strTracks = new LinkedList(Arrays.asList(str.split("\\r?\\n"))); // AMAZINGLY split to tracks
+		} else { // if not then its only one track
+			strTracks = new LinkedList<String>();
+			strTracks.add(str);
 		}
 		
-		String[][] strNotes = new String[strTracks.length][]; // allocate string array for every track
+		strTracks.removeAll(Collections.singleton("\r")); // get rid of carriage return bitch String if its stuck somewhere
 		
-		for ( int i = 0; i < strTracks.length; i++)
+		// --- Here we split each track by space so we can have individual notes
+		
+		for (String track : strTracks)
 		{
-			if (strTracks[i].contains(" "))
+			if (track.contains(" "))
 			{
-				strNotes[i] = strTracks[i].split(" ");
-			} else {
-				strNotes[i] = new String[0];
-				strNotes[i][0] = strTracks[i];
+				strNotes.add(new LinkedList(Arrays.asList(track.split(" "))));
+			} else { // if only one note
+				List<String> singleNoteList = new LinkedList<String>();
+				singleNoteList.add(track);
+				strNotes.add(singleNoteList);
 			}
 		}
 		
-		int[][] notes = new int[strTracks.length][];
+		strTracks = null; // dereference this because the inner Lists are reprogrammed to strNotes
+		
+		// -- Here we get rid of some bullshit ---
+		for (List<String> trak : strNotes)
+		{
+			trak.removeAll(Collections.singleton("")); // every track String can have empty Strings because it splits by spaces and there can be 2 spaces next to each other
+			trak.removeAll(Collections.singleton("\t")); // also get rid of tabs
+		}
+		
+		
+		// -- And here we parse the strNotes 2D String array to 2D int array notes which is our return type
+		
+		int[][] notes = new int[strNotes.size()][]; // int array with unallocated int arrays inside
 		
 		try {
 			
-			for ( int tracki = 0; tracki < strTracks.length; tracki++)
+			for ( int tracki = 0; tracki < strNotes.size(); tracki++)
 			{
-				notes[tracki] = new int[strNotes[tracki].length]; // allocate int array for every track
-				for ( int notei = 0; notei < strNotes[tracki].length; notei++)
+				notes[tracki] = new int[strNotes.get(tracki).size()]; // allocate int array for every track
+				
+				for ( int notei = 0; notei < strNotes.get(tracki).size(); notei++)
 				{
-					notes[tracki][notei] = parseNote(strNotes[tracki][notei]);
+					notes[tracki][notei] = parseNote(strNotes.get(tracki).get(notei));
 				}
 			}
 			

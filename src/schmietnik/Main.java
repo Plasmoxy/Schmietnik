@@ -1,17 +1,17 @@
 package schmietnik;
 
-import java.io.FileInputStream;
 import java.io.IOException;
-import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
+import sun.util.logging.PlatformLogger;
+
 public final class Main
 {
 	
-	private static final String VERSION = "1.1";
-	private static final String VERSION_FULL = "v" + VERSION + " Lux";
+	private static final String VERSION = "1.2";
+	private static final String VERSION_FULL = "v" + VERSION + " Janna";
 	
 	private static final String readFile(String path) throws IOException // snippet method for reading files as strings
 	{
@@ -21,9 +21,13 @@ public final class Main
 	
 	public static void main(String[] args) throws Exception
 	{
+		// turn off platform logger so it doesn't show the warning
+		sun.util.logging.PlatformLogger platformLogger = PlatformLogger.getLogger("java.util.prefs");
+		platformLogger.setLevel(PlatformLogger.Level.OFF);
 		
 		System.out.println("\n--- Schmietnik txt midi cell player by Plasmoxy xDDD --- < argument \"help\" for info >");
 		System.out.println("Version : " + VERSION_FULL);
+		System.out.println();
 		
 		String fileName = "notes.txt";
 		int tempo = 80;
@@ -58,7 +62,7 @@ public final class Main
 				try {
 					tempo = Integer.valueOf(args[1]);
 				} catch (NumberFormatException e) {
-					System.out.println("Tempo must be a number !");
+					System.out.println("Tempo must be a number !\n");
 				}
 			}
 		}
@@ -67,7 +71,7 @@ public final class Main
 		try {
 			notesSource = readFile(fileName);
 		} catch (IOException e) {
-			System.out.println("ERROR : File not found.");
+			System.out.println("ERROR : File not found.\n");
 			System.exit(-1);
 		}
 		
