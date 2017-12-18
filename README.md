@@ -1,5 +1,5 @@
-# Schmietnik java cell text midi player
-_**amazing**_.  :clap::clap::clap::clap::clap::clap::clap:
+ # Schmietnik java cell text midi player
+_**amazing**_.  :clap::clap::clap::clap::clap::clap::clap: 
 _**c h e c c**_ the [release page](https://github.com/Plasmoxy/Schmietnik/releases) for java binaries xD  
 _version :_ **v1.1 Lux**  
 
